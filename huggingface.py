@@ -18,7 +18,7 @@ def preprocess(examples):
     # Tokenize inputs
     model_inputs = tokenizer(
         inputs, 
-        max_length=128, 
+        max_length=512, 
         truncation=True, 
         padding=False  # Let data collator handle padding
     )
@@ -26,7 +26,7 @@ def preprocess(examples):
     # Tokenize targets/labels properly
     labels = tokenizer(
         text_target=targets,  # Use text_target parameter (new way)
-        max_length=128, 
+        max_length=512, 
         truncation=True, 
         padding=False  # Let data collator handle padding
     )
@@ -75,7 +75,7 @@ training_args = TrainingArguments(
     learning_rate=3e-4,  # Higher learning rate
     per_device_train_batch_size=4,  # Increased batch size
     per_device_eval_batch_size=4,
-    num_train_epochs=5,  # More epochs
+    num_train_epochs=20,  # More epochs
     weight_decay=0.01,
     warmup_steps=10,  # Add warmup
     fp16=False,  # Disable mixed precision to avoid NaN issues
