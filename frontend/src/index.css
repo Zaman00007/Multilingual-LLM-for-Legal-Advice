@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+}
+
+@layer components {
+  .chat-bubble {
+    @apply max-w-xs lg:max-w-md xl:max-w-lg break-words mx-4;
+  }
+  
+  .user-bubble {
+    @apply bg-legal-navy text-white rounded-2xl rounded-br-md;
+  }
+  
+  .ai-bubble {
+    @apply bg-white text-gray-800 border border-gray-200 rounded-2xl rounded-bl-md;
+  }
+  
+  .loading-dots {
+    @apply flex space-x-1;
+  }
+  
+  .loading-dots span {
+    @apply w-2 h-2 bg-legal-gray rounded-full animate-pulse;
+  }
+  
+  .loading-dots span:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+  
+  .loading-dots span:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+}

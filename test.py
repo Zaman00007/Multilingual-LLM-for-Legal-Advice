@@ -30,9 +30,7 @@ def ask_question_english(question_en, max_length=128, num_beams=4):
 def ask_question_hindi(question_hi):
     # Translate Hindi input to English
     question_en = translator.translate(question_hi, src='hi', dest='en').text
-    print(question_en)
     answer_en = ask_question_english(question_en)
-    print(answer_en)
     answer_hi = translator.translate(answer_en, src='en', dest='hi').text
     return answer_hi
 
