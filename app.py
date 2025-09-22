@@ -5,13 +5,10 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 
-# -------------------------
-# Setup
-# -------------------------
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(f"Using device: {device}")
 
-model_dir = "./legal-llm-fixed"
+model_dir = "./legal-llm-new"
 tokenizer = AutoTokenizer.from_pretrained(model_dir)
 model = AutoModelForSeq2SeqLM.from_pretrained(model_dir)
 model.to(device)
@@ -20,20 +17,15 @@ model.eval()
 translator = Translator()
 app = FastAPI()
 
-# -------------------------
-# CORS Setup
-# -------------------------
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # or specify your frontend URL e.g. ["http://localhost:3000"]
+    allow_origins=["*"], 
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# -------------------------
-# Helper functions
-# -------------------------
 def ask_question_english(question_en, max_length=128, num_beams=4):
     inputs = tokenizer(question_en, return_tensors="pt", max_length=max_length, truncation=True)
     inputs = {k: v.to(device) for k, v in inputs.items()}
@@ -48,7 +40,7 @@ def ask_question_english(question_en, max_length=128, num_beams=4):
     return response_en
 
 def ask_question(text):
-    detected_lang = translator.detect(text).lang  # 'en' or 'hi'
+    detected_lang = translator.detect(text).lang  
     
     if detected_lang == "en":
         answer_en = ask_question_english(text)
@@ -61,9 +53,6 @@ def ask_question(text):
     else:
         return {"language": detected_lang, "answer": "Unsupported language"}
 
-# -------------------------
-# API Route
-# -------------------------
 class Query(BaseModel):
     text: str
 
